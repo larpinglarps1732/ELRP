@@ -1,33 +1,27 @@
-const { ActionRowBuilder, StringSelectMenuBuilder } = require('discord.js');
+const { ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
 
 module.exports = {
   name: "menu",
-  description: "Shows a test menu",
+  description: "Shows a test menu with buttons",
   async execute(message, args) {
-    // Initial message
+    // Step 1: Send the test message
     await message.channel.send("This is a test");
 
-    // Create a dropdown menu
-    const selectMenu = new StringSelectMenuBuilder()
-      .setCustomId("test-menu")
-      .setPlaceholder("Choose an option")
-      .addOptions([
-        {
-          label: "Option 1",
-          description: "This is the first option",
-          value: "option_1",
-        },
-        {
-          label: "Option 2",
-          description: "This is the second option",
-          value: "option_2",
-        },
-      ]);
+    // Step 2: Create buttons
+    const row = new ActionRowBuilder().addComponents(
+      new ButtonBuilder()
+        .setCustomId("option_1")
+        .setLabel("Option 1")
+        .setStyle(ButtonStyle.Primary),
+      new ButtonBuilder()
+        .setCustomId("option_2")
+        .setLabel("Option 2")
+        .setStyle(ButtonStyle.Secondary)
+    );
 
-    const row = new ActionRowBuilder().addComponents(selectMenu);
-
+    // Step 3: Send the message with buttons
     await message.channel.send({
-      content: "Select an option below:",
+      content: "Choose an option:",
       components: [row],
     });
   },
