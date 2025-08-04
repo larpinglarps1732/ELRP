@@ -11,8 +11,16 @@ for (const file of commandFiles) {
   client.commands.set(command.data.name, command);
 }
 
-client.on('interactionCreate', async interaction => {
-  if (!interaction.isCommand()) return;
+client.on("interactionCreate", async interaction => {
+  if (!interaction.isButton()) return;
+
+  if (interaction.customId === "option_1") {
+    await interaction.reply({ content: "You clicked Option 1!", ephemeral: true });
+  } else if (interaction.customId === "option_2") {
+    await interaction.reply({ content: "You clicked Option 2!", ephemeral: true });
+  }
+});
+
 
   const command = client.commands.get(interaction.commandName);
   if (!command) return;
